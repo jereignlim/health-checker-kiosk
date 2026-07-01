@@ -4,7 +4,7 @@
    =========================== */
 
 // TODO: replace with your deployed Google Apps Script Web App URL
-const WEB_APP_URL = 'YOUR_WEB_APP_URL';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGe0iA4WvJGOp6ZkMUB_z1G0P9gfLRVX8VDg2fFE3n9vJDl5tEYFyRV_kGIQQN3jOesA/exec';
 
 // Gauge is drawn for BMI values from 15 to 40; values outside this range
 // still show their real number, but the needle clamps to the nearest edge.

@@ -11,13 +11,36 @@
 </head>
 <body>
 
-  <header class="site-header">
+  <nav class="site-nav" id="siteNav">
+    <a class="nav-brand" href="#top">
+      <img src="images/logo.png" alt="vitals. logo" class="nav-logo" />
+      vitals.
+    </a>
+    <div class="nav-links">
+      <a href="#checkSection">Check-in</a>
+      <a href="#historySection">History</a>
+    </div>
+  </nav>
+
+  <header class="site-header" id="top">
     <div class="brand">
+      <img src="images/logo.png" alt="vitals. logo" class="brand-logo" />
       <span class="brand-mark">vitals.</span>
       <span class="brand-tag">a quick check-in with yourself</span>
     </div>
     <p class="header-sub">Health Self-Check Kiosk &middot; walk-in wellness screening</p>
+
+    <p class="kiosk-ticket" id="kioskTicket">
+      <span class="ticket-dot" aria-hidden="true"></span>
+      Kiosk open &middot; <span id="ticketCount">0</span> check-ins this session
+    </p>
   </header>
+
+  <div class="pulse-divider" aria-hidden="true">
+    <svg viewBox="0 0 400 32" preserveAspectRatio="none">
+      <path d="M0 16 H150 L163 4 L178 28 L191 10 L202 16 H400" />
+    </svg>
+  </div>
 
   <main>
     <section class="intro">
@@ -28,7 +51,7 @@
       </p>
     </section>
 
-    <section class="kiosk-grid">
+    <section class="kiosk-grid" id="checkSection">
 
       <!-- FORM CARD -->
       <section class="card form-card scallop-top" aria-labelledby="formHeading">
@@ -36,20 +59,20 @@
         <form id="bmiForm" novalidate>
 
           <div class="field">
-            <label for="name">Full name</label>
+            <label for="name"><svg class="field-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>Full name</label>
             <input type="text" id="name" name="name" placeholder="Juana Dela Cruz" required />
             <span class="error-msg" id="nameError"></span>
           </div>
 
           <div class="field-row">
             <div class="field">
-              <label for="age">Age</label>
+              <label for="age"><svg class="field-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg>Age</label>
               <input type="number" id="age" name="age" min="1" max="120" placeholder="20" required />
               <span class="error-msg" id="ageError"></span>
             </div>
 
             <div class="field">
-              <label for="sex">Sex</label>
+              <label for="sex"><svg class="field-icon" viewBox="0 0 24 24"><circle cx="10" cy="14" r="5"/><path d="M14 10l6-6M14 4h6v6"/></svg>Sex</label>
               <select id="sex" name="sex" required>
                 <option value="">Select</option>
                 <option value="Female">Female</option>
@@ -61,13 +84,13 @@
 
           <div class="field-row">
             <div class="field">
-              <label for="weight">Weight (kg)</label>
+              <label for="weight"><svg class="field-icon" viewBox="0 0 24 24"><path d="M12 3v3M8 6h8l2.5 13a2 2 0 0 1-2 2.3H7.5a2 2 0 0 1-2-2.3L8 6Z"/></svg>Weight (kg)</label>
               <input type="number" id="weight" name="weight" min="1" step="0.1" placeholder="55" required />
               <span class="error-msg" id="weightError"></span>
             </div>
 
             <div class="field">
-              <label for="height">Height (cm)</label>
+              <label for="height"><svg class="field-icon" viewBox="0 0 24 24"><path d="M7 3h10v18H7z"/><path d="M7 7h3M7 11h3M7 15h3M7 19h3"/></svg>Height (cm)</label>
               <input type="number" id="height" name="height" min="1" step="0.1" placeholder="160" required />
               <span class="error-msg" id="heightError"></span>
             </div>
@@ -83,9 +106,19 @@
         <span class="result-eyebrow">Your result</span>
         <h2 id="resultName">—</h2>
 
-        <div class="bmi-badge" id="bmiBadge">
-          <span class="bmi-number" id="bmiNumber">0.0</span>
-          <span class="bmi-label">BMI</span>
+        <div class="gauge-block">
+          <div class="gauge" id="bmiGauge">
+            <div class="gauge-needle" id="gaugeNeedle"></div>
+            <div class="gauge-hub" id="gaugeHub"></div>
+          </div>
+          <div class="gauge-scale">
+            <span>15</span>
+            <span>40</span>
+          </div>
+          <div class="bmi-readout" id="bmiReadout">
+            <span class="bmi-number" id="bmiNumber">0.0</span>
+            <span class="bmi-label">BMI</span>
+          </div>
         </div>
 
         <p class="category-pill" id="categoryPill">—</p>
@@ -97,7 +130,7 @@
     </section>
 
     <!-- RECENT SUBMISSIONS -->
-    <section class="card history-card scallop-top">
+    <section class="card history-card scallop-top" id="historySection">
       <h2>Recent check-ins</h2>
       <p class="history-hint">This session's entries only &mdash; staff review the full log in the shared sheet.</p>
       <ul id="historyList" class="history-list">
@@ -106,120 +139,11 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>vitals. kiosk &middot; entries are shared with the school nurse for wellness follow-up.</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>vitals. — Health Self-Check Kiosk</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Mukta:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-
-  <header class="site-header">
-    <div class="brand">
-      <span class="brand-mark">vitals.</span>
-      <span class="brand-tag">a quick check-in with yourself</span>
-    </div>
-    <p class="header-sub">Health Self-Check Kiosk &middot; walk-in wellness screening</p>
-  </header>
-
-  <main>
-    <section class="intro">
-      <h1>How are you doing today?</h1>
-      <p>
-        Pop in your details below and we'll work out your BMI, tell you what it means,
-        and note it down for the nurse's office &mdash; no appointment needed.
-      </p>
-    </section>
-
-    <section class="kiosk-grid">
-
-      <!-- FORM CARD -->
-      <section class="card form-card scallop-top" aria-labelledby="formHeading">
-        <h2 id="formHeading">Your details</h2>
-        <form id="bmiForm" novalidate>
-
-          <div class="field">
-            <label for="name">Full name</label>
-            <input type="text" id="name" name="name" placeholder="Juana Dela Cruz" required />
-            <span class="error-msg" id="nameError"></span>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="age">Age</label>
-              <input type="number" id="age" name="age" min="1" max="120" placeholder="20" required />
-              <span class="error-msg" id="ageError"></span>
-            </div>
-
-            <div class="field">
-              <label for="sex">Sex</label>
-              <select id="sex" name="sex" required>
-                <option value="">Select</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-              </select>
-              <span class="error-msg" id="sexError"></span>
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="weight">Weight (kg)</label>
-              <input type="number" id="weight" name="weight" min="1" step="0.1" placeholder="55" required />
-              <span class="error-msg" id="weightError"></span>
-            </div>
-
-            <div class="field">
-              <label for="height">Height (cm)</label>
-              <input type="number" id="height" name="height" min="1" step="0.1" placeholder="160" required />
-              <span class="error-msg" id="heightError"></span>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-check">Check my BMI 🌸</button>
-          <p class="form-note" id="formNote" role="alert"></p>
-        </form>
-      </section>
-
-      <!-- RESULT CARD -->
-      <section id="resultCard" class="card result-card scallop-top hidden" aria-live="polite">
-        <span class="result-eyebrow">Your result</span>
-        <h2 id="resultName">—</h2>
-
-        <div class="bmi-badge" id="bmiBadge">
-          <span class="bmi-number" id="bmiNumber">0.0</span>
-          <span class="bmi-label">BMI</span>
-        </div>
-
-        <p class="category-pill" id="categoryPill">—</p>
-        <p class="result-message" id="resultMessage"></p>
-
-        <button type="button" class="btn-secondary" id="checkAgainBtn">Check another entry</button>
-      </section>
-
-    </section>
-
-    <!-- RECENT SUBMISSIONS -->
-    <section class="card history-card scallop-top">
-      <h2>Recent check-ins</h2>
-      <p class="history-hint">This session's entries only &mdash; staff review the full log in the shared sheet.</p>
-      <ul id="historyList" class="history-list">
-        <li class="history-empty" id="historyEmpty">No check-ins yet. Be the first today!</li>
-      </ul>
-    </section>
-  </main>
+  <div class="pulse-divider pulse-divider-footer" aria-hidden="true">
+    <svg viewBox="0 0 400 32" preserveAspectRatio="none">
+      <path d="M0 16 H150 L163 4 L178 28 L191 10 L202 16 H400" />
+    </svg>
+  </div>
 
   <footer class="site-footer">
     <p>vitals. kiosk &middot; entries are shared with the school nurse for wellness follow-up.</p>

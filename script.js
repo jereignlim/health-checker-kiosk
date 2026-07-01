@@ -1,13 +1,6 @@
-/* ===========================
-   vitals. — Health Self-Check Kiosk
-   script.js
-   =========================== */
 
-// TODO: replace with your deployed Google Apps Script Web App URL
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGe0iA4WvJGOp6ZkMUB_z1G0P9gfLRVX8VDg2fFE3n9vJDl5tEYFyRV_kGIQQN3jOesA/exec';
 
-// Gauge is drawn for BMI values from 15 to 40; values outside this range
-// still show their real number, but the needle clamps to the nearest edge.
 const GAUGE_MIN = 15;
 const GAUGE_MAX = 40;
 
@@ -24,12 +17,8 @@ window.addEventListener('scroll', function () {
   siteNav.classList.toggle('is-scrolled', window.scrollY > 8);
 });
 
-// In-memory array of this session's submissions (used by the loop below)
 const submissions = [];
 
-// Field IDs required before we'll process the form.
-// Looping through this list is how we check every field in one pass
-// instead of writing five separate if-statements.
 const requiredFields = [
   { id: 'name', label: 'Full name' },
   { id: 'age', label: 'Age' },
@@ -70,7 +59,6 @@ form.addEventListener('submit', function (e) {
   const weight = parseFloat(values.weight);
   const heightCm = parseFloat(values.height);
 
-  // ---- IF-ELSE: validate ranges before we trust the numbers ----
   if (isNaN(age) || age <= 0 || age > 120) {
     showFieldError('age', 'Enter an age between 1 and 120.');
     formNote.textContent = 'Please check the highlighted field.';
@@ -87,13 +75,11 @@ form.addEventListener('submit', function (e) {
     formNote.textContent = '';
   }
 
-  // ---- Compute BMI ----
   const heightM = heightCm / 100;
   const bmi = +(weight / (heightM * heightM)).toFixed(1);
 
   let category, message, colorClass;
 
-  // ---- SWITCH-CASE: map the BMI value to a category, message, and color ----
   switch (true) {
     case bmi < 18.5:
       category = 'Underweight';
@@ -179,7 +165,6 @@ function showResult(name, bmi, category, message, colorClass) {
   resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ---- LOOP: forEach renders the running list of this session's check-ins ----
 function renderHistory() {
   historyList.innerHTML = '';
 
@@ -217,13 +202,11 @@ function categoryClass(category) {
   }
 }
 
-// Keeps the header ticket honest — it reflects real activity this session,
-// not a made-up counter.
+
 function updateTicket() {
   ticketCount.textContent = submissions.length;
 }
 
-// ---- Send the record to the Google Apps Script Web App (Google Sheet) ----
 function recordSubmission(record) {
   if (!WEB_APP_URL || WEB_APP_URL === 'YOUR_WEB_APP_URL') {
     console.warn('WEB_APP_URL is not set — skipping Google Sheet logging.');

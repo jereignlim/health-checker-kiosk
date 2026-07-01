@@ -1,0 +1,374 @@
+/* ===========================
+   vitals. — Health Self-Check Kiosk
+   =========================== */
+
+:root {
+  --pink-bg: #fdf0f2;
+  --pink-card: #ffffff;
+  --pink-primary: #f2a6bb;
+  --pink-primary-dark: #e97fa0;
+  --pink-deep: #c2597a;
+  --pink-line: #f6d9e1;
+  --text-main: #4a3238;
+  --text-soft: #8a6a72;
+
+  --clr-underweight: #7fb3e8;
+  --clr-underweight-bg: #eaf3fd;
+  --clr-normal: #6fcf97;
+  --clr-normal-bg: #eafbf1;
+  --clr-overweight: #f2b25c;
+  --clr-overweight-bg: #fff4e3;
+  --clr-obese: #ea7a7a;
+  --clr-obese-bg: #fdecec;
+
+  --radius-card: 26px;
+  --shadow-card: 0 12px 28px rgba(226, 130, 160, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Mukta', sans-serif;
+  background: var(--pink-bg);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+h1, h2 {
+  font-family: 'Fraunces', serif;
+  margin: 0 0 0.4em;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  padding: 2rem 1.5rem 1.2rem;
+  text-align: center;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.brand-mark {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 2.4rem;
+  color: var(--pink-deep);
+}
+
+.brand-tag {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: var(--pink-primary-dark);
+  margin-top: -0.4rem;
+}
+
+.header-sub {
+  margin-top: 0.6rem;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Layout ---------- */
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.intro {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+
+.intro h1 {
+  font-size: 1.9rem;
+  color: var(--pink-deep);
+}
+
+.intro p {
+  color: var(--text-soft);
+}
+
+.kiosk-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ---------- Card base + scallop ---------- */
+.card {
+  background: var(--pink-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 2rem 1.8rem 1.8rem;
+  position: relative;
+  border: 1px solid var(--pink-line);
+}
+
+.scallop-top::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-image: radial-gradient(circle at 10px 10px, var(--pink-bg) 10px, transparent 11px);
+  background-size: 20px 20px;
+  background-repeat: repeat-x;
+  background-position: left 14px;
+}
+
+.card h2 {
+  color: var(--pink-deep);
+  font-size: 1.3rem;
+}
+
+/* ---------- Form ---------- */
+.field {
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.field-row .field {
+  flex: 1;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--pink-deep);
+  margin-bottom: 0.35rem;
+}
+
+input, select {
+  font-family: 'Mukta', sans-serif;
+  font-size: 1rem;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid var(--pink-line);
+  border-radius: 14px;
+  background: #fffafb;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--pink-primary);
+  box-shadow: 0 0 0 3px rgba(242, 166, 187, 0.3);
+}
+
+input:invalid:not(:placeholder-shown) {
+  border-color: var(--clr-obese);
+}
+
+.error-msg {
+  min-height: 1.1em;
+  font-size: 0.78rem;
+  color: var(--clr-obese);
+  margin-top: 0.3rem;
+}
+
+.btn-check {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  margin-top: 0.4rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--pink-primary), var(--pink-primary-dark));
+  color: #fff;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(233, 127, 160, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn-check:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(233, 127, 160, 0.45);
+}
+
+.form-note {
+  min-height: 1.2em;
+  text-align: center;
+  color: var(--clr-obese);
+  font-size: 0.85rem;
+  margin: 0.6rem 0 0;
+}
+
+/* ---------- Result card ---------- */
+.result-card {
+  text-align: center;
+}
+
+.result-card.hidden {
+  display: none;
+}
+
+.result-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pink-primary-dark);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.bmi-badge {
+  width: 140px;
+  height: 140px;
+  margin: 1rem auto;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-normal-bg);
+  border: 4px solid var(--clr-normal);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.bmi-number {
+  font-family: 'Fraunces', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.bmi-label {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.category-pill {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  background: var(--clr-normal-bg);
+  color: var(--clr-normal);
+}
+
+.result-message {
+  color: var(--text-soft);
+  margin: 0.9rem 0 1.2rem;
+}
+
+.btn-secondary {
+  border: 1.5px solid var(--pink-primary);
+  background: transparent;
+  color: var(--pink-deep);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--pink-bg);
+}
+
+/* Category color states, applied via JS */
+.bmi-badge.cat-underweight { background: var(--clr-underweight-bg); border-color: var(--clr-underweight); }
+.bmi-badge.cat-normal      { background: var(--clr-normal-bg); border-color: var(--clr-normal); }
+.bmi-badge.cat-overweight  { background: var(--clr-overweight-bg); border-color: var(--clr-overweight); }
+.bmi-badge.cat-obese       { background: var(--clr-obese-bg); border-color: var(--clr-obese); }
+
+.category-pill.cat-underweight { background: var(--clr-underweight-bg); color: var(--clr-underweight); }
+.category-pill.cat-normal      { background: var(--clr-normal-bg); color: var(--clr-normal); }
+.category-pill.cat-overweight  { background: var(--clr-overweight-bg); color: var(--clr-overweight); }
+.category-pill.cat-obese       { background: var(--clr-obese-bg); color: var(--clr-obese); }
+
+/* ---------- History ---------- */
+.history-card {
+  margin-top: 1.5rem;
+}
+
+.history-hint {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  margin-top: -0.4rem;
+}
+
+.history-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.history-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-radius: 14px;
+  background: var(--pink-bg);
+  font-size: 0.9rem;
+}
+
+.history-empty {
+  color: var(--text-soft);
+  justify-content: center !important;
+  background: transparent !important;
+}
+
+.history-tag {
+  font-weight: 700;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  padding: 1.2rem;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .kiosk-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .brand-mark {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 1.6rem 1.2rem 1.4rem;
+  }
+}

@@ -4,7 +4,12 @@
    =========================== */
 
 // TODO: replace with your deployed Google Apps Script Web App URL
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGe0iA4WvJGOp6ZkMUB_z1G0P9gfLRVX8VDg2fFE3n9vJDl5tEYFyRV_kGIQQN3jOesA/exec';
+const WEB_APP_URL = 'YOUR_WEB_APP_URL';
+
+// Gauge is drawn for BMI values from 15 to 40; values outside this range
+// still show their real number, but the needle clamps to the nearest edge.
+const GAUGE_MIN = 15;
+const GAUGE_MAX = 40;
 
 const form = document.getElementById('bmiForm');
 const resultCard = document.getElementById('resultCard');
@@ -12,6 +17,12 @@ const formNote = document.getElementById('formNote');
 const checkAgainBtn = document.getElementById('checkAgainBtn');
 const historyList = document.getElementById('historyList');
 const historyEmpty = document.getElementById('historyEmpty');
+const ticketCount = document.getElementById('ticketCount');
+const siteNav = document.getElementById('siteNav');
+
+window.addEventListener('scroll', function () {
+  siteNav.classList.toggle('is-scrolled', window.scrollY > 8);
+});
 
 // In-memory array of this session's submissions (used by the loop below)
 const submissions = [];
@@ -119,6 +130,7 @@ form.addEventListener('submit', function (e) {
 
   submissions.unshift(record);
   renderHistory();
+  updateTicket();
   recordSubmission(record);
 
   form.reset();
@@ -151,8 +163,17 @@ function showResult(name, bmi, category, message, colorClass) {
   pill.textContent = category;
   pill.className = 'category-pill ' + colorClass;
 
-  const badge = document.getElementById('bmiBadge');
-  badge.className = 'bmi-badge ' + colorClass;
+  const readout = document.getElementById('bmiReadout');
+  readout.className = 'bmi-readout ' + colorClass;
+
+  const hub = document.getElementById('gaugeHub');
+  hub.className = 'gauge-hub ' + colorClass;
+
+  // Position the needle along the 15–40 gauge scale
+  const clamped = Math.min(Math.max(bmi, GAUGE_MIN), GAUGE_MAX);
+  const position = (clamped - GAUGE_MIN) / (GAUGE_MAX - GAUGE_MIN);
+  const angle = -90 + position * 180;
+  document.getElementById('gaugeNeedle').style.transform = `rotate(${angle}deg)`;
 
   resultCard.classList.remove('hidden');
   resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -194,6 +215,12 @@ function categoryClass(category) {
     default:
       return 'cat-obese';
   }
+}
+
+// Keeps the header ticket honest — it reflects real activity this session,
+// not a made-up counter.
+function updateTicket() {
+  ticketCount.textContent = submissions.length;
 }
 
 // ---- Send the record to the Google Apps Script Web App (Google Sheet) ----

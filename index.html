@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vitals. — Health Self-Check Kiosk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Mukta:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">vitals.</span>
+      <span class="brand-tag">a quick check-in with yourself</span>
+    </div>
+    <p class="header-sub">Health Self-Check Kiosk &middot; walk-in wellness screening</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>How are you doing today?</h1>
+      <p>
+        Pop in your details below and we'll work out your BMI, tell you what it means,
+        and note it down for the nurse's office &mdash; no appointment needed.
+      </p>
+    </section>
+
+    <section class="kiosk-grid">
+
+      <!-- FORM CARD -->
+      <section class="card form-card scallop-top" aria-labelledby="formHeading">
+        <h2 id="formHeading">Your details</h2>
+        <form id="bmiForm" novalidate>
+
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="Juana Dela Cruz" required />
+            <span class="error-msg" id="nameError"></span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="age">Age</label>
+              <input type="number" id="age" name="age" min="1" max="120" placeholder="20" required />
+              <span class="error-msg" id="ageError"></span>
+            </div>
+
+            <div class="field">
+              <label for="sex">Sex</label>
+              <select id="sex" name="sex" required>
+                <option value="">Select</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+              </select>
+              <span class="error-msg" id="sexError"></span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="weight">Weight (kg)</label>
+              <input type="number" id="weight" name="weight" min="1" step="0.1" placeholder="55" required />
+              <span class="error-msg" id="weightError"></span>
+            </div>
+
+            <div class="field">
+              <label for="height">Height (cm)</label>
+              <input type="number" id="height" name="height" min="1" step="0.1" placeholder="160" required />
+              <span class="error-msg" id="heightError"></span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-check">Check my BMI 🌸</button>
+          <p class="form-note" id="formNote" role="alert"></p>
+        </form>
+      </section>
+
+      <!-- RESULT CARD -->
+      <section id="resultCard" class="card result-card scallop-top hidden" aria-live="polite">
+        <span class="result-eyebrow">Your result</span>
+        <h2 id="resultName">—</h2>
+
+        <div class="bmi-badge" id="bmiBadge">
+          <span class="bmi-number" id="bmiNumber">0.0</span>
+          <span class="bmi-label">BMI</span>
+        </div>
+
+        <p class="category-pill" id="categoryPill">—</p>
+        <p class="result-message" id="resultMessage"></p>
+
+        <button type="button" class="btn-secondary" id="checkAgainBtn">Check another entry</button>
+      </section>
+
+    </section>
+
+    <!-- RECENT SUBMISSIONS -->
+    <section class="card history-card scallop-top">
+      <h2>Recent check-ins</h2>
+      <p class="history-hint">This session's entries only &mdash; staff review the full log in the shared sheet.</p>
+      <ul id="historyList" class="history-list">
+        <li class="history-empty" id="historyEmpty">No check-ins yet. Be the first today!</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>vitals. kiosk &middot; entries are shared with the school nurse for wellness follow-up.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
